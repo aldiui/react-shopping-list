@@ -1,0 +1,28 @@
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px;
+}
+
+.infoTotal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--main-font-color);
+    font-size: 12px;
+}
+
+.infoTotal > p {
+    font-weight: bold;
+}
+
+.deleteAllButton {
+    border: none;
+    background-color: unset;
+    padding: unset;
+    color: var(--danger-font-color);
+    font-size: 12px;
+    font-weight: bold;
+}

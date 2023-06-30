@@ -45,7 +45,7 @@
     width: 24px;
 }
 
-.todoDevider {
+.todoDivider {
     border-bottom: 1px solid var(--main-border-color);
 }
 

@@ -15,7 +15,6 @@ function App() {
         if (storedTodos) {
             setTodos(JSON.parse(storedTodos));
         } else {
-            // Set 3 initial todos
             const initialTodos = [
                 { title: 'Susu Murni', count: 1 },
                 { title: 'Tahu Sumedang', count: 1 },
@@ -71,6 +70,12 @@ function App() {
         setTodos(newTodos);
     };
 
+    const handleEdit = (index, title) => {
+        const newTodos = [...todos];
+        newTodos[index].title = title;
+        setTodos(newTodos);
+    };
+
     const getTotalCounts = () => {
         const totalCounts = todos.reduce((total, num) => {
             return total + num.count;
@@ -89,15 +94,7 @@ function App() {
             <Container>
                 <SearchInput onSubmit={handleSubmit} onChange={(e) => setValue(e.target.value)} value={value} />
                 <Info onDelete={handleDeleteAll} totalList={todos.length} totalCounts={getTotalCounts()} />
-                {todos.length > 0 ? (
-                    <Todos
-                        todos={todos}
-                        onSubtraction={(index) => handleSubtractionCount(index)}
-                        onAddition={(index) => handleAdditionCount(index)}
-                    />
-                ) : (
-                    <Empty />
-                )}
+                {todos.length > 0 ? <Todos todos={todos} onSubtraction={(index) => handleSubtractionCount(index)} onAddition={(index) => handleAdditionCount(index)} onEdit={(index, title) => handleEdit(index, title)} /> : <Empty />}
             </Container>
         </>
     );

@@ -1,15 +1,36 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import styles from '../css/Todos.module.css';
 import plusIcon from '../assets/plus-icon.svg';
 import minusIcon from '../assets/minus-icon.svg';
 
-const Todos = ({ todos, onAddition, onSubtraction }) => {
+const Todos = ({ todos, onAddition, onSubtraction, onEdit }) => {
+    const [editableIndex, setEditableIndex] = useState(null);
+    const [editValue, setEditValue] = useState('');
+
+    const handleEdit = (index, title) => {
+        setEditableIndex(index);
+        setEditValue(title);
+    };
+
+    const handleSave = (index) => {
+        onEdit(index, editValue);
+        setEditableIndex(null);
+        setEditValue('');
+    };
+
     return (
         <div className={styles.todos}>
             {todos.map((todo, index, arr) => {
+                const isEditable = index === editableIndex;
+
                 return (
                     <div key={index} className={`${styles.todo} ${arr.length === index + 1 ? '' : styles.todoDivider}`}>
-                        {todo.title}
+                        {isEditable ? (
+                            <input type="text" className={styles.input} value={editValue} onChange={(e) => setEditValue(e.target.value)} onBlur={() => handleSave(index)} autoFocus />
+                        ) : (
+                            <div onClick={() => handleEdit(index, todo.title)}>{todo.title}</div>
+                        )}
                         <div className={styles.todoIconWrapper}>
                             <button onClick={() => onAddition(index)} className={styles.todoActionButton}>
                                 <img src={plusIcon} alt="plus icon" />
@@ -35,6 +56,7 @@ Todos.propTypes = {
     ),
     onSubtraction: PropTypes.func,
     onAddition: PropTypes.func,
+    onEdit: PropTypes.func,
 };
 
 export default Todos;

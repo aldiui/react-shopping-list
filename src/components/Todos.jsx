@@ -14,7 +14,18 @@ const Todos = ({ todos, onAddition, onSubtraction, onEdit }) => {
     };
 
     const handleSave = (index) => {
-        onEdit(index, editValue);
+        if (!editValue.trim()) {
+            alert('List cannot be blank');
+            return;
+        }
+
+        const isDuplicate = todos.some((todo, i) => i !== index && todo.title === editValue.trim());
+        if (isDuplicate) {
+            alert('List already exists');
+            return;
+        }
+
+        onEdit(index, editValue.trim());
         setEditableIndex(null);
         setEditValue('');
     };

@@ -31,12 +31,12 @@ function App() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!value) {
+        if (!value.trim()) {
             alert('No blank list');
             return;
         }
 
-        const isDuplicate = todos.some((todo) => todo.title === value);
+        const isDuplicate = todos.some((todo) => todo.title === value.trim());
         if (isDuplicate) {
             alert('List already exists');
             setValue('');
@@ -46,7 +46,7 @@ function App() {
         const addTodos = [
             ...todos,
             {
-                title: value,
+                title: value.trim(),
                 count: 1,
             },
         ];
